@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emotion Monitor</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f5f7fa;
+      color: #333;
+    }
+    h1 {
+      color: #0078d7;
+    }
+    .data-box {
+      margin-top: 20px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 400px;
+    }
+    .label {
+      font-weight: bold;
+    }
+    .value {
+      font-size: 1.2em;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>PKM EMONG (Emotion Monitoring)</h1>
+
+  <div class="data-box">
+    <p><span class="label">Emotion:</span> <span id="emotion" class="value">neutral</span></p>
+    <p><span class="label">Confidence:</span> <span id="confidence" class="value">0.00</span></p>
+  </div>
+
+  <script>
+    // Hubungkan ke server Flask-SocketIO
+    var socket = io();
+
+    // Dengarkan event "emotion_update" dari backend
+    socket.on("emotion_update", function(data) {
+      document.getElementById("emotion").innerText = data.emotion;
+      document.getElementById("confidence").innerText = data.confidence.toFixed(2);
+    });
+  </script>
+</body>
+</html>
